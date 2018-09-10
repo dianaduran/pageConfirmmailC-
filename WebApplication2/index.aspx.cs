@@ -3,6 +3,7 @@ using System.Web.UI;
 using System.Net;
 using System.Net.Mail; //used to send mail 
 using System.Net.Sockets;//used to control access to the network
+using System.IO; //read file 
 
 
 namespace WebApplication2
@@ -10,10 +11,14 @@ namespace WebApplication2
 
     public partial class index : System.Web.UI.Page
     {
-         
+        string to = "";
+        string password = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string template = File.ReadAllText(Server.MapPath("~/Enviroment/") + "env.txt");
+            to = template.Split(':')[0];
+            password = template.Split(':')[1];
 
         }
 
@@ -34,7 +39,7 @@ namespace WebApplication2
                 try
                 {
                     //Create obj to send message with to, from, subject and body
-                    MailMessage mail = new MailMessage("ddurandor@gmail.com", "e&e@eemiamiconstruction.com", subject, body);
+                    MailMessage mail = new MailMessage(to, "e&e@eemiamiconstruction.com", subject, body);
                     mail.BodyEncoding = System.Text.Encoding.UTF8;
                     // body message in html
                     mail.IsBodyHtml = true;
@@ -42,20 +47,20 @@ namespace WebApplication2
                     //Smtp gmail setting
                     SmtpClient client = new SmtpClient("smtp.gmail.com");
                     client.Port = 587;
-                    client.Credentials = new System.Net.NetworkCredential("ddurandor@gmail.com", "diana+2010");
+                    client.Credentials = new System.Net.NetworkCredential(to, password);
                     client.EnableSsl = true;
                     client.Send(mail);
 
                     //confirmation email and replace the subject and body
                     subject = "From: Iluma Agency";
                     body = "<h6>Your email was sent successfully</h6>";
-                    MailMessage mailConfirm = new MailMessage("ddurandor@gmail.com", txtEmail.Text, subject, body);
+                    MailMessage mailConfirm = new MailMessage(to, txtEmail.Text, subject, body);
                     mailConfirm.BodyEncoding = System.Text.Encoding.UTF8;
                     // body message in html
                     mailConfirm.IsBodyHtml = true;
                     SmtpClient clientConfirm = new SmtpClient("smtp.gmail.com");
                     clientConfirm.Port = 587;
-                    clientConfirm.Credentials = new System.Net.NetworkCredential("ddurandor@gmail.com", "diana+2010");
+                    clientConfirm.Credentials = new System.Net.NetworkCredential(to, password);
                     clientConfirm.EnableSsl = true;
                     clientConfirm.Send(mailConfirm);
 
