@@ -13,10 +13,13 @@ namespace WebApplication2
     {
         string to = "";
         string password = "";
+        string requirements = "https://github.com/dianaduran/pageConfirmmailC-";
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Read file with the email and password
             string template = File.ReadAllText(Server.MapPath("~/Enviroment/") + "env.txt");
+            //split to get part of the template string
             to = template.Split(':')[0];
             password = template.Split(':')[1];
 
@@ -33,13 +36,14 @@ namespace WebApplication2
                 string company = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(txtCompany.Text.ToLower());
 
                 //Create body and subject of the email calling the method GetLocalIPAddress() 
-                string body = "<h6>" + name + " " + lastName + " from " + company + " and email " + txtEmail.Text + " and IP address " + GetLocalIPAddress() + " wants to work with you!</h6>";
+                string body = "<h6>" + name + " " + lastName + " from " + company + " company, email " + txtEmail.Text + " and IP address " + GetLocalIPAddress() + " wants to work with you!<br/>" +
+                    "This is the link of the application " + requirements + "</h6>";
                 string subject = "From: " + name + " " + lastName;
 
                 try
                 {
                     //Create obj to send message with to, from, subject and body
-                    MailMessage mail = new MailMessage(to, "e&e@eemiamiconstruction.com", subject, body);
+                    MailMessage mail = new MailMessage(to, "shermor@ilumaagency.com", subject, body);
                     mail.BodyEncoding = System.Text.Encoding.UTF8;
                     // body message in html
                     mail.IsBodyHtml = true;
