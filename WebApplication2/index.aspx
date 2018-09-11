@@ -11,10 +11,10 @@
     <h3 align="center">Iluma Agency</h3>
     <br />
     <form id="form1" runat="server">
-        <table style="background-color:#eeeeee; width:60%" align="center" cellpadding="10px" >
+        <table style="background-color:#eeeeee; width:60%; text-align:center; margin:0 auto;" cellpadding="10px">
             <asp:ValidationSummary ID="ValidationSummary1" ShowMessageBox ="true" runat="server"  /> 
             <tr>
-                <td rowspan="1">Name</td>
+                <td>Name</td>
                 <td>
                      <asp:TextBox ID="txtName" runat="server" Width="99%"></asp:TextBox>
                 </td>
