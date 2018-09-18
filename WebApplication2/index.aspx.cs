@@ -43,17 +43,10 @@ namespace WebApplication2
                 try
                 {
                     //Create obj to send message with to, from, subject and body
-                    MailMessage mail = new MailMessage(to, "shermor@ilumaagency.com", subject, body);
+                    MailMessage mail = new MailMessage(to, "e&e@eemiamiconstruction.com", subject, body);
                     mail.BodyEncoding = System.Text.Encoding.UTF8;
                     // body message in html
                     mail.IsBodyHtml = true;
-
-                    //Smtp gmail setting
-                    SmtpClient client = new SmtpClient("smtp.gmail.com");
-                    client.Port = 587;
-                    client.Credentials = new System.Net.NetworkCredential(to, password);
-                    client.EnableSsl = true;
-                    client.Send(mail);
 
                     //confirmation email and replace the subject and body
                     subject = "From: Iluma Agency";
@@ -62,11 +55,15 @@ namespace WebApplication2
                     mailConfirm.BodyEncoding = System.Text.Encoding.UTF8;
                     // body message in html
                     mailConfirm.IsBodyHtml = true;
-                    SmtpClient clientConfirm = new SmtpClient("smtp.gmail.com");
-                    clientConfirm.Port = 587;
-                    clientConfirm.Credentials = new System.Net.NetworkCredential(to, password);
-                    clientConfirm.EnableSsl = true;
-                    clientConfirm.Send(mailConfirm);
+                   
+
+                    //Smtp gmail setting
+                    SmtpClient client = new SmtpClient("smtp.gmail.com");
+                    client.Port = 587;
+                    client.Credentials = new System.Net.NetworkCredential(to, password);
+                    client.EnableSsl = true;
+                    client.Send(mail);
+                    client.Send(mailConfirm);
 
                     //Message
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Thank you!')", true);                    
